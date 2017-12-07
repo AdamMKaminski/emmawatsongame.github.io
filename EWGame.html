@@ -1,0 +1,169 @@
+<head>
+	<script>
+		function begin_game() {
+			if (document.getElementById("start").value == document.getElementById("end").value) {
+				document.getElementById("the_board").innerHTML = "start and end must be different!";
+			}
+			else if (document.getElementById("start").value.length == 0) {
+				document.getElementById("the_board").innerHTML = "set your parameters!";
+			}
+			else if (document.getElementById("end").value.length == 0) {
+				document.getElementById("the_board").innerHTML = "set your parameters!";
+			}
+			else {
+
+				document.getElementById("tag").innerHTML = "";
+
+				var word = document.getElementById("start").value;
+				document.getElementById("the_board").innerHTML = word + " ... ";
+				document.getElementById("the_review").innerHTML = 0;
+
+				start_clock();
+			}
+		}
+		function word_play() {
+			var word = document.getElementById("next_word").value;
+			var end_word = document.getElementById("end").value;
+
+			document.getElementById("the_review").innerHTML = get_count(document.getElementById("the_review").innerHTML, 0);
+
+			if (word == end_word) {
+				document.getElementById("the_board").innerHTML += word;
+				document.getElementById("the_review").innerHTML = "Your moves: " + document.getElementById("the_review").innerHTML + " Your time: " + document.getElementById("timer").innerHTML;
+				document.getElementById("timer").innerHTML = "";
+				document.getElementById("tag").innerHTML = "done";
+			}
+			else {
+				document.getElementById("the_board").innerHTML += word + " ... ";
+			}
+		}
+		function get_count(place, start) {
+			if (place == start) {
+				return start += 1;
+			}
+			else {
+				start += 1;
+				return get_count(place, start);
+			}
+		}
+		function start_clock() {
+			
+			var start = new Date().getTime();
+
+			var x = setInterval(function() {
+				var now = new Date().getTime();
+				document.getElementById("timer").innerHTML = now - start;
+
+				if (document.getElementById("tag").innerHTML == "reset") {
+					clearInterval(x);
+					document.getElementById("timer").innerHTML = "time here";
+				}
+				if (document.getElementById("tag").innerHTML == "done") {
+					clearInterval(x);
+					document.getElementById("timer").innerHTML = "";
+				}
+			});
+		}
+		function stop_game() {
+			document.getElementById("the_board").innerHTML = "";
+			document.getElementById("the_review").innerHTML = "moves here";
+			document.getElementById("timer").innerHTML = "time here";
+			document.getElementById("tag").innerHTML = "reset";
+		}
+	</script>
+</head>
+
+<html>
+	<header>
+		<b>emma watson game</b>
+		<div id="pictures">
+			<img src="ew4.jpg" width="190" height="110" id="ewimage4">
+			<img src="ew2.jpg" width="90" height="110" id="ewimage2">
+			<img src="ew5.jpg" width="180" height="110" id="ewimage5">
+			<img src="ew6.jpg" width="160" height="110" id="ewimage6">
+			<img src="ew3.jpg" width="120" height="110" id="ewimage3">
+			<img src="ew7.jpg" width="90" height="110" id="ewimage7">
+			<img src="ew8.jpg" width="180" height="110" id="ewimage8">
+		</div>
+		<div> ------------------------------------------------- </div>
+	</header>
+	<body bgcolor="#a8a8c4">
+		starting noun: <input type="text" id="start"/>
+		<br></br>
+		end noun: <input type="text" id="end"/>
+		<br></br>
+		<input type="button" value="play" onclick="begin_game()">
+		<input type="button" value="reset" onclick="stop_game()">
+		<br></br>
+		<b>game board</b>
+		<div> ------------------------------------------------- </div>
+		<div id="the_review">moves here</div> 
+		<div id="timer">time here</div>
+		<br></br>
+		<div id="the_board"></div>
+		<br></br>
+		<input type="text" id="next_word"/>
+		<input type="button" value="submit" onclick="word_play()">
+		<br></br>
+		<b>stats</b>
+		<div> ------------------------------------------------- </div>
+		<div id="tag"></div>
+		
+		<pre class="row1" contenteditable="true">
+			  player 1   player 2
+			-----------------------
+	       moves (1)|              
+		time (1)|              
+			-----------------------   
+	       moves (2)|                
+		time (2)|                
+			-----------------------
+	       moves (3)|              
+		time (3)|               
+			-----------------------
+	       moves (4)|                 
+		time (4)|                 
+			-----------------------
+	       moves (5)|              
+		time (5)|            
+			-----------------------
+	       moves (6)|              
+		time (6)|            
+			-----------------------
+	       moves (7)|              
+		time (7)|            
+			-----------------------
+	       moves (8)|              
+		time (8)|            
+			-----------------------
+	       moves (9)|              
+		time (9)|            
+			-----------------------
+	      moves (10)|              
+	       time (10)|            
+			-----------------------
+		</pre>
+		<b>how to play</b>
+		<div> ------------------------------------------------- </div>
+		1. Player A determines the starting and ending <u>nouns</u> for player B
+		<br></br>
+		2. Player B presses "play" to begin
+		<br></br>
+		3. Player B makes a series of semantic or associative leaps from the starting noun to the ending noun
+		<br></br>
+		EXAMPLE: If the starting noun is <b>apple</b> and the ending noun is <b>astrophysics</b>, player B could go: <b>apple ... apple tree ... newton ... physics ... astrophysics</b>
+		<br></br>
+		NOTES: To make a leap, enter one word into the box left of "submit" / Press "submit" to submit / Try to use all lowercase 
+		<br></br>
+		4. Player A reviews the semantic or associative leaps of player B. Was there... cheating?
+		<br></br>
+		5. Player B enters their ~moves score~ and their ~time score~ into the stats section
+		<br></br>
+		6. Switch the roles of player A and player B. Repeat steps 1 through 5
+		<br></br>
+		7. Repeat steps 1 through 6 as many times as you darn well please
+		<br></br>
+		8. At some point, compute the scores to determine a winner
+		<br></br>
+	</body>
+</html>
